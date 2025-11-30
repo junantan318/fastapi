@@ -60,4 +60,4 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}/fastapi:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi:latest
