@@ -27,7 +27,6 @@ Includes automated testing, Dockerized deployment, and a full CI/CD pipeline usi
 - **Testing:** Pytest  
 - **CI/CD:** GitHub Actions  
 - **Containerization:** Docker  
-- **Reverse Proxy / Server:** (add later if you deploy)
 
 ---
 
