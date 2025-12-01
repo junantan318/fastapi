@@ -97,7 +97,7 @@ docker build -t fastapi .
 
 ### Run the container
 
-docker run -p 8000:8000 fastapi
+docker run -p 8005:8000 fastapi
 
 ---
 
