@@ -64,7 +64,8 @@
           with:
             platforms: linux/amd64,linux/arm64
             push: true
-            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-api:latest
+            tags: junan318/fastapi-api:latest
+
 
     deploy:
       needs: build
