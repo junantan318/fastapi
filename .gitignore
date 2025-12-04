@@ -1,4 +1,6 @@
 __pycache__
 venv/
 .env
-
+github_deploy_key
+github_deploy_key.pub
+*.pem
