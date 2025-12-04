@@ -64,7 +64,7 @@
           with:
             platforms: linux/amd64,linux/arm64
             push: true
-            tags: junan318/fastapi-api:latest
+            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-api:latest
 
     deploy:
       needs: build
@@ -79,11 +79,11 @@
             username: ${{ secrets.EC2_USER }}
             key: ${{ secrets.EC2_SSH_KEY }}
             script: |
-              docker pull junan318/fastapi-api:latest
+              docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-api:latest
               docker stop fastapi-api || true
               docker rm fastapi-api || true
               docker run -d \
                 --name fastapi-api \
                 --env-file /home/ubuntu/.env \
                 -p 80:8000 \
-                junan318/fastapi-api:latest
+                ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-api:latest
