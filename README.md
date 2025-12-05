@@ -70,14 +70,23 @@ The application is deployed on AWS using the following architecture:
 ## Environment Variables
 
 Create a `.env` file in the project root with the following:
+
 DATABASE_HOSTNAME=localhost
+
 DATABASE_PORT=5432
+
 DATABASE_USERNAME=postgres
+
 DATABASE_PASSWORD=postgres
+
 DATABASE_NAME=fastapi
+
 SECRET_KEY=your_secret_key
+
 ALGORITHM=HS256
+
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+
 ---
 
 ## Running Locally
