@@ -4,7 +4,20 @@ A production-ready REST API built with FastAPI, PostgreSQL, SQLAlchemy, and JWT 
 Includes automated testing, Dockerized deployment, and a full CI/CD pipeline using GitHub Actions.
 
 ---
+## Live Deployment (AWS)
 
+This API is deployed on **AWS EC2** using a Dockerized FastAPI application connected to an **AWS RDS PostgreSQL** database.
+
+Public API:
+http://16.16.68.130/docs
+
+---
+## Architecture Overview
+
+FastAPI (Docker) → EC2 Instance  
+FastAPI ↔ RDS PostgreSQL  
+GitHub Actions → Docker Hub → EC2 (CI/CD auto-deploy)
+---
 ## Features
 
 - User authentication with JWT
@@ -29,6 +42,30 @@ Includes automated testing, Dockerized deployment, and a full CI/CD pipeline usi
 - **Containerization:** Docker  
 
 ---
+## AWS Deployment Summary
+On AWS EC2, the container exposes port **8000**, which is mapped to port **80** for public access.
+
+The application is deployed on AWS using the following architecture:
+
+- **AWS EC2** (Ubuntu) for hosting the FastAPI Docker container
+- **AWS RDS PostgreSQL** for managed database
+- **Docker Hub** to store built images
+- **GitHub Actions CI/CD** to automatically:
+  - Run tests
+  - Build + push Docker image
+  - SSH into EC2
+  - Pull the latest image and restart the container
+
+---
+
+### Deployment Steps
+
+1. Create an RDS PostgreSQL instance (free tier).  
+2. Launch an EC2 Ubuntu instance and install Docker.  
+3. Store environment variables in `.env` on EC2.  
+4. Pull the Docker image from Docker Hub.  
+5. Run the container exposing port 80 → 8000.  
+6. Set up GitHub Actions to redeploy on every push to `main`.  
 
 ## Environment Variables
 
@@ -41,10 +78,10 @@ DATABASE_NAME=fastapi
 SECRET_KEY=your_secret_key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-
 ---
 
 ## Running Locally
+Note: The application runs on port **8005** in local development.
 
 ### 1. Clone the repository
 git clone https://github.com/junan318/fastapi.git
@@ -89,6 +126,7 @@ pytest
 ---
 
 ## Docker
+The FastAPI app inside the container listens on port **8000**, but we map it to **8005** on the host machine.
 
 ### Build the image locally
 
@@ -97,37 +135,26 @@ docker build -t fastapi .
 ### Run the container
 
 docker run -p 8005:8000 fastapi
+Port 8005 is exposed locally, while the FastAPI app inside the container runs on port 8000.
 
 ---
 
-## CI/CD Pipeline
+## CI/CD Pipeline (GitHub Actions → EC2)
 
-This project uses **GitHub Actions** to:
+On every push to the `main` branch:
 
-- Run automated tests on every push and pull request
-- Build and push Docker images to Docker Hub automatically after successful tests
+1. Run all Pytest unit/integration tests  
+2. Build a Docker image  
+3. Push the image to Docker Hub  
+4. SSH into the EC2 server  
+5. Pull the new Docker image  
+6. Stop the old container and run the updated one  
 
----
-
-## What I Learned
-
-- Building REST APIs with FastAPI
-- PostgreSQL and SQLAlchemy ORM
-- JWT authentication and security
-- Automated testing with Pytest
-- CI/CD with GitHub Actions
-- Docker containerization and image publishing
+This creates a fully automated deployment pipeline.
 
 ---
 
 ## Credits
 
-Based on the freeCodeCamp FastAPI course, extended with full CI/CD automation and Docker deployment.
-
----
-
-## Author
-
-**Junan**  
-GitHub: https://github.com/junan318  
+Based on the freeCodeCamp FastAPI course, extended with full CI/CD automation, Docker deployment and AWS deployment.
 
